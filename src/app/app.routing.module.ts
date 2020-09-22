@@ -6,6 +6,7 @@ import {PhotoFormComponent} from './photos/photo-form/photo-form.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { PhotoListResolver } from './photos/photo-list/photo-list.resolver';
 import { AuthGuard } from './core/auth/auth.guard';
+import { RequiresAuthenticationGuard } from './core/auth/requires-authentication.guard';
 
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
     //Rota do user
     {path: 'user/:userName', component: PhotoListComponent, resolve:{photos: PhotoListResolver}},
     //Rota para adc foto
-    {path: 'p/add', component: PhotoFormComponent},
+    {path: 'p/add', component: PhotoFormComponent, canActivate:[RequiresAuthenticationGuard]},
     //Rota "default" -> 404
     { path: '**', component: NotFoundComponent }
 ];
