@@ -5,8 +5,8 @@ import {PhotoListComponent} from './photos/photo-list/photo-list.component';
 import {PhotoFormComponent} from './photos/photo-form/photo-form.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { PhotoListResolver } from './photos/photo-list/photo-list.resolver';
-import { AuthGuard } from './core/auth/auth.guard';
 import { RequiresAuthenticationGuard } from './core/auth/requires-authentication.guard';
+import { PhotoDetailComponent } from './photos/photo-detail/photo-detail.component';
 
 
 const routes: Routes = [
@@ -25,6 +25,8 @@ const routes: Routes = [
     {path: 'user/:userName', component: PhotoListComponent, resolve:{photos: PhotoListResolver}},
     //Rota para adc foto
     {path: 'p/add', component: PhotoFormComponent, canActivate:[RequiresAuthenticationGuard]},
+    //Rota para Detalhes da foto
+    {path: 'p/:photoId', component: PhotoDetailComponent},
     //Rota "default" -> 404
     { path: '**', component: NotFoundComponent }
 ];
