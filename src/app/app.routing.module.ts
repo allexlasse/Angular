@@ -28,7 +28,8 @@ const routes: Routes = [
     //Rota para Detalhes da foto
     {path: 'p/:photoId', component: PhotoDetailComponent},
     //Rota "default" -> 404
-    { path: '**', component: NotFoundComponent }
+    { path: 'not-found', component: NotFoundComponent },
+    { path: '**', redirectTo: 'not-found' },
 ];
 
 @NgModule({
