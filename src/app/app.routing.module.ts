@@ -5,8 +5,9 @@ import {PhotoListComponent} from './photos/photo-list/photo-list.component';
 import {PhotoFormComponent} from './photos/photo-form/photo-form.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { PhotoListResolver } from './photos/photo-list/photo-list.resolver';
-import { RequiresAuthenticationGuard } from './core/auth/requires-authentication.guard';
+import { AuthGuard } from './core/auth/auth.guard';
 import { PhotoDetailComponent } from './photos/photo-detail/photo-detail.component';
+import { GlobalErrorComponent } from './errors/global-error/global-error.component';
 
 
 const routes: Routes = [
@@ -22,14 +23,40 @@ const routes: Routes = [
         loadChildren:'./home/home.module#HomeModule'
     },
     //Rota do user
-    {path: 'user/:userName', component: PhotoListComponent, resolve:{photos: PhotoListResolver}},
+    {
+        path: 'user/:userName', 
+        component: PhotoListComponent, 
+        resolve:{photos: PhotoListResolver},
+        data:{title:'TimeLine'}
+    },
     //Rota para adc foto
-    {path: 'p/add', component: PhotoFormComponent, canActivate:[RequiresAuthenticationGuard]},
+    {
+        path: 'p/add', 
+        component: PhotoFormComponent, 
+        canActivate:[AuthGuard],
+        data:{title:'Upload'}
+    },
     //Rota para Detalhes da foto
-    {path: 'p/:photoId', component: PhotoDetailComponent},
-    //Rota "default" -> 404
-    { path: 'not-found', component: NotFoundComponent },
-    { path: '**', redirectTo: 'not-found' },
+    {
+        path: 'p/:photoId', 
+        component: PhotoDetailComponent,
+        data:{title:'Details'}
+    },
+    //Rota "default" -> NotFound
+    { 
+        path: 'error', 
+        component: GlobalErrorComponent,
+        data:{title:'Error'}
+    },
+    { 
+        path: 'not-found', 
+        component: NotFoundComponent,
+        data:{title:'Not Found'}
+    },
+    { 
+        path: '**', 
+        redirectTo: 'not-found' 
+    },
 ];
 
 @NgModule({
